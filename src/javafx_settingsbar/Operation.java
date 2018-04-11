@@ -48,7 +48,19 @@ public class Operation {
         return this;
     }
      
-     public String toString(){
+     public int getConsumer(){
+         return this.consumerId;
+     }
+     
+     public int getProducer(){
+         return this.producerId;
+     }
+     
+     public String getResult(){
+         return this.result;
+     }
+     
+     public String getOperation(){
          return "( " + this.symbol + " " + this.a + " " + this.b + " )";
      }
     

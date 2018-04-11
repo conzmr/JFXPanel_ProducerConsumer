@@ -5,10 +5,10 @@
  */
 package javafx_settingsbar;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author conzmr
@@ -16,38 +16,34 @@ import javax.swing.table.DefaultTableModel;
 public class Consumer extends Thread{
     
     private final int id;
-    private final long waitingTime;
-    private final Buffer buffer;
-    private final Operation[] doneOperations;
+    private static long waitingTime;
+    private static Buffer buffer;
+    private static Queue<Operation> consumedOperations;
     
-    Consumer(int id, long time, Buffer buffer, Operation[] doneOperations) {
+    public static void setStaticProperties(long wTime, Buffer sharedBuffer){
+        waitingTime = wTime;
+        buffer = sharedBuffer;
+        consumedOperations = new LinkedList<>();
+    }
+    
+    Consumer(int id) {
         this.id = id;
-        this.waitingTime = time;
-        this.buffer = buffer; 
-        this.doneOperations = doneOperations;
     }
     
      @Override
     public void run() {
         Operation product;
-        
         while(true){
             try {
-                product = this.buffer.consume().solveOperation(this.id);
-                //Agregar a la tabla tipo doneOperations.push(doneOperations); this.frame.addDone(task);
-                Thread.sleep(this.waitingTime);
-                // Remover toDo en this.buffer.consume() this.frame.removeTodo();
-                try {
-                Thread.sleep(this.milliseconds);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                product = buffer.consume().solveOperation(this.id);
+                consumedOperations.offer(product); //Meterlas a lista de Done 
+                System.out.println("Consumer "+product.getConsumer()+" consumed operation: "+product.getOperation()+" = "+product.getResult());
+                Thread.sleep(waitingTime);
             } 
             catch (InterruptedException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
    
     
