@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="549.0" prefWidth="418.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx_settingsbar.FXMLDocumentController">
+   <children>
+      <AnchorPane fx:id="settingsPane" cacheShape="false" layoutY="91.0" prefHeight="493.0" prefWidth="491.0" style="-fx-background-color: #3d4956;" visible="false">
+         <children>
+            <Label layoutX="196.0" layoutY="49.0" text="CANTIDAD" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="310.0" layoutY="49.0" prefHeight="17.0" prefWidth="154.0" text="TIEMPO DE ESPERA (MS)" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="producersQty" layoutX="193.0" layoutY="83.0" prefHeight="27.0" prefWidth="69.0" promptText="Ej. 2" />
+            <TextField fx:id="consumersQty" layoutX="193.0" layoutY="128.0" maxHeight="1.7976931348623157E308" prefHeight="7.0" prefWidth="69.0" promptText="Ej. 2" />
+            <TextField fx:id="pWaitingTime" layoutX="314.0" layoutY="83.0" prefHeight="27.0" prefWidth="146.0" promptText="Ej. 1000" />
+            <TextField fx:id="cWaitingTime" layoutX="315.0" layoutY="128.0" maxHeight="1.7976931348623157E308" prefHeight="27.0" prefWidth="146.0" promptText="Ej. 1000" />
+            <Slider fx:id="bufferSize" layoutX="193.0" layoutY="230.0" majorTickUnit="19.0" min="1.0" minWidth="-Infinity" minorTickCount="1" onDragDetected="#handleButtonAction" prefHeight="5.0" prefWidth="229.0" snapToTicks="true" value="5.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Slider>
+            <Label layoutX="51.0" layoutY="334.0" text="Rango de valores" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="initialRange" layoutX="202.0" layoutY="329.0" prefHeight="27.0" prefWidth="69.0" promptText="Ej. 1" />
+            <TextField fx:id="finalRange" layoutX="322.0" layoutY="329.0" prefHeight="27.0" prefWidth="69.0" promptText="Ej. 10" />
+            <Separator layoutX="47.0" layoutY="188.0" opacity="0.15" prefHeight="5.0" prefWidth="409.0" />
+            <Separator layoutX="47.0" layoutY="275.0" opacity="0.15" prefHeight="5.0" prefWidth="409.0" />
+            <Separator layoutX="47.0" layoutY="392.0" opacity="0.15" prefHeight="5.0" prefWidth="409.0" />
+            <Button layoutX="281.0" layoutY="421.0" mnemonicParsing="false" onAction="#start" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #ff7864; -fx-background-radius: 5em; -fx-border-radius: 5em;" text="INICIAR" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnCancel" layoutX="89.0" layoutY="421.0" mnemonicParsing="false" onAction="#cancel" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #515D6D; -fx-background-radius: 5em; -fx-border-radius: 5em;" text="CANCELAR" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="47.0" layoutY="230.0" text="Tamaño del buffer" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="217.0" layoutY="301.0" text="Inicial" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="134.0" text="Consumidores" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="335.0" layoutY="301.0" text="Final" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="bufferLabel" layoutX="434.0" layoutY="230.0" text="1" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="89.0" text="Productores" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="13.0" />
+               </font>
+            </Label>
+            <Polygon fill="#3d4956" layoutX="92.0" layoutY="4.0" scaleX="0.3" scaleY="0.2" stroke="TRANSPARENT" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tasksPane" layoutY="92.0" prefHeight="493.0" prefWidth="491.0" style="-fx-background-color: #3d4956;" visible="false">
+         <children>
+            <Polygon fill="#3d4956" layoutX="249.0" layoutY="3.0" scaleX="0.3" scaleY="0.2" stroke="TRANSPARENT" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Label alignment="CENTER" layoutX="43.0" layoutY="38.0" prefHeight="32.0" prefWidth="114.0" style="-fx-background-color: #515D6D; -fx-background-radius: 1em;" text="TO DO" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="316.0" layoutY="44.0" prefHeight="32.0" prefWidth="114.0" style="-fx-background-color: #515D6D; -fx-background-radius: 1em;" text="DONE" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Neue Bold" size="12.0" />
+               </font>
+            </Label>
+            <ProgressBar layoutX="31.0" layoutY="252.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="436.0" progress="0.65" rotate="-90.0" />
+            <TableView layoutX="24.0" layoutY="156.0" prefHeight="288.0" prefWidth="246.0" style="-fx-background-color: #515D6D;">
+              <columns>
+                <TableColumn prefWidth="94.0" text="Producer ID" />
+                <TableColumn prefWidth="152.0" style="-fx-background-color: red;" text="Operation" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+      <AnchorPane fx:id="topbar" layoutY="-2.0" prefHeight="76.0" prefWidth="491.0" style="-fx-background-color: #3d4956;">
+         <children>
+            <ImageView fx:id="btnSettings" layoutX="76.0" layoutY="25.0" onMousePressed="#handleButtonAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/settings_W.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="btnTasks" layoutX="231.0" layoutY="23.0" onMousePressed="#handleButtonAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/tasks_filled.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="btnShutdown" layoutX="381.0" layoutY="23.0" onMousePressed="#handleButtonAction" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <image>
+                  <Image url="@images/shutdown.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
