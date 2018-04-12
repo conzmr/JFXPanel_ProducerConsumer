@@ -33,7 +33,6 @@ public class Producer extends Thread{
         char symbol;
         String symbols;
         symbols = "+-*/";
-        System.out.println("CHAR AT 0 INDEX "+symbols.charAt(3));
         symbol = symbols.charAt(random.nextInt(4));
         a = getRandFromRange();
         b= getRandFromRange();

@@ -11,19 +11,19 @@ package javafx_settingsbar;
  */
 public class Operation {
     
-    private int a, b, producerId, consumerId;
+    private int a, b;
     private char symbol;
-    private String result;
+    private String result, operation, producerId, consumerId;
     
     public Operation(int a, int b, char symbol, int producerId){
         this.a = a;
         this.b = b;
         this.symbol = symbol;
-        this.producerId = producerId;
+        this.producerId = ""+producerId;
+        this.operation = "( " + symbol + " " + a + " " + b + " )";
     }
     
-     public Operation solveOperation(int consumerId){
-        this.consumerId = consumerId;
+     public Operation solveOperation(){
         try{
             switch(this.symbol){
             case '+': 
@@ -48,11 +48,11 @@ public class Operation {
         return this;
     }
      
-     public int getConsumer(){
+     public String getConsumer(){
          return this.consumerId;
      }
      
-     public int getProducer(){
+     public String getProducer(){
          return this.producerId;
      }
      
@@ -60,8 +60,17 @@ public class Operation {
          return this.result;
      }
      
+     public Operation setConsumer(int id){
+         this.consumerId = id+"";
+         return this;
+     }
+     
      public String getOperation(){
          return "( " + this.symbol + " " + this.a + " " + this.b + " )";
+     }
+     
+     public String toString(){
+         return this.getConsumer()+this.getProducer()+this.getResult()+this.getOperation();
      }
     
 }

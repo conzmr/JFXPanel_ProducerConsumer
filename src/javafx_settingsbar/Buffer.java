@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 /**
  *
  * @author conzmr
@@ -17,24 +20,33 @@ public class Buffer {
     
     private Queue<Operation> producedOperations;
     private int size;
+    private TableView toDoList, doneList;
+    private ObservableList<Operation> doneOperations, toDoOperations;
+   
     
-    Buffer(int maxSize) {
+    Buffer(int maxSize, TableView toDoTable, TableView doneTable) {
         this.size = maxSize;
         this.producedOperations = new LinkedList<>();
+        this.toDoList = toDoTable;
+        this.doneList = doneTable;
+        this.doneOperations = FXCollections.observableArrayList();
+        this.toDoOperations = FXCollections.observableArrayList();
     }
     
-    synchronized Operation consume() {
+    synchronized void consume(int id) {
         Operation product;
-        while(this.producedOperations.isEmpty()){
+        while(toDoOperations.isEmpty()){
             try {
                     wait();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
                 }
         }
-        product = this.producedOperations.poll(); //Sacarlas a lista de toDo - decrementar progress bar
+        product = toDoOperations.remove(0); //decrementar progress bar
+        product = product.setConsumer(id).solveOperation();
+        doneOperations.add(product);
+        doneList.setItems(doneOperations);
         notifyAll();
-        return product;
     }
     
     synchronized void produce(Operation product) {
@@ -45,8 +57,8 @@ public class Buffer {
                 Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Producer "+product.getProducer()+" produced operation: "+product.getOperation());
-        this.producedOperations.offer(product); //Meterlas a lista de toDo - incrementar progress bar
+        toDoOperations.add(product);//Incrementar progress bar
+        toDoList.setItems(toDoOperations);
         notifyAll();
     }
     

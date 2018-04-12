@@ -7,7 +7,6 @@ package javafx_settingsbar;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,8 +15,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,9 +58,18 @@ public class FXMLDocumentController implements Initializable {
                       initialRange, 
                       finalRange;
     
-
-
+    @FXML
+    private TableView toDoTable, doneTable;
+    
+    @FXML
+    private TableColumn col_producerId, col_consumerId, col_result, col_operation, col2_operation, col2_producerId;
+    
+    @FXML
+    private ProgressBar bufferContent;
    
+
+
+    
     @FXML
     private void handleButtonAction(MouseEvent event) {
    
@@ -81,6 +93,14 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        col_producerId.setCellValueFactory( new PropertyValueFactory<Operation,String>("producerId"));
+        col_consumerId.setCellValueFactory( new PropertyValueFactory<Operation,String>("consumerId"));
+        col_result.setCellValueFactory( new PropertyValueFactory<Operation, String>("result"));
+        col_operation.setCellValueFactory( new PropertyValueFactory<Operation,String>("operation"));
+        
+        col2_operation.setCellValueFactory( new PropertyValueFactory<Operation,String>("operation"));
+        col2_producerId.setCellValueFactory( new PropertyValueFactory<Operation,String>("producerId"));
+        
          bufferSize.valueProperty().addListener((observable, oldValue, newValue) -> {
             bufferLabel.setText(Integer.toString(newValue.intValue()));
         });
@@ -138,7 +158,7 @@ public class FXMLDocumentController implements Initializable {
                 tasksPane.setVisible(true);
                 settingsPane.setVisible(false);
 
-                Buffer buffer = new Buffer(bSize);
+                Buffer buffer = new Buffer(bSize, toDoTable, doneTable);
                 Consumer.setStaticProperties(consWaitingTime, buffer);
                 Producer.setStaticProperties(iRange, fRange, prodWaitingTime, buffer);
 

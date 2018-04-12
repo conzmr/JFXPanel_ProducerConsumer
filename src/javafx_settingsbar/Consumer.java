@@ -5,8 +5,6 @@
  */
 package javafx_settingsbar;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -18,12 +16,10 @@ public class Consumer extends Thread{
     private final int id;
     private static long waitingTime;
     private static Buffer buffer;
-    private static Queue<Operation> consumedOperations;
     
     public static void setStaticProperties(long wTime, Buffer sharedBuffer){
         waitingTime = wTime;
         buffer = sharedBuffer;
-        consumedOperations = new LinkedList<>();
     }
     
     Consumer(int id) {
@@ -32,12 +28,9 @@ public class Consumer extends Thread{
     
      @Override
     public void run() {
-        Operation product;
         while(true){
             try {
-                product = buffer.consume().solveOperation(this.id);
-                consumedOperations.offer(product); //Meterlas a lista de Done 
-                System.out.println("Consumer "+product.getConsumer()+" consumed operation: "+product.getOperation()+" = "+product.getResult());
+                buffer.consume(this.id); 
                 Thread.sleep(waitingTime);
             } 
             catch (InterruptedException ex) {
