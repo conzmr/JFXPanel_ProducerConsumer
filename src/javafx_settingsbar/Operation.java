@@ -19,7 +19,7 @@ public class Operation {
         this.a = a;
         this.b = b;
         this.symbol = symbol;
-        this.producerId = ""+producerId;
+        this.producerId = String.valueOf(producerId);
         this.operation = "( " + symbol + " " + a + " " + b + " )";
     }
     
