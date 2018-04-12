@@ -18,6 +18,7 @@ public class Producer extends Thread{
     private static Random random;
     private static Buffer buffer;
     private final int id;
+    private static boolean run = true;
     
     public static void setStaticProperties(int iRange, int fRange, long wTime, Buffer buf){
         initialRange = iRange;
@@ -32,8 +33,8 @@ public class Producer extends Thread{
         char symbol;
         String symbols;
         symbols = "+-*/";
-        System.out.println("CHAR AT 0 INDEX "+symbols.charAt(0));
-        symbol = symbols.charAt(random.nextInt(4) + 1);
+        System.out.println("CHAR AT 0 INDEX "+symbols.charAt(3));
+        symbol = symbols.charAt(random.nextInt(4));
         a = getRandFromRange();
         b= getRandFromRange();
         return new Operation(a, b, symbol, this.id);
@@ -60,10 +61,5 @@ public class Producer extends Thread{
             
         }
     }
-    
-    
-    
-    
-   
-    
+
 }
